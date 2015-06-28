@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# BanInformer *BETA* [TEST]
+#
+# First version of BanInformer to be run as a standalone program
+#
+# Wed May  6 15:58:48 PDT 2015
+# Scott "Roguehorse" DuBois
+
+cd /home/roguehorse/Scripts/BanInformer/testing
+
+bash /home/roguehorse/Scripts/BanInformer/testing/bi_run_reports_test
+bash /home/roguehorse/Scripts/BanInformer/testing/single_report
+
+printf "\n\n"
+cat /home/roguehorse/Scripts/BanInformer/testing/results/bi_ssr.txt
+printf "\n\n"
+
+# End of Script

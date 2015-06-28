@@ -1,0 +1,183 @@
+#!/bin/bash
+#
+# BanInformer most aggressive [S2]
+#
+# Scan fail2ban logs for most aggreesive
+# IP block
+# 
+# Sat Apr 18 09:58:37 PDT 2015
+# Written by: Scott DuBois
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+count=0
+
+# verify file exists
+log=/var/log/fail2ban.log
+if [ -f $log ]; then
+
+  # empty any current files
+  rm /root/Bans/aggr/*  
+
+  # copy to working file
+  cp /var/log/fail2* /root/Bans/aggr
+
+  # unzip all archived files
+  gunzip /root/Bans/aggr/*.gz
+
+else
+
+  echo "No log files available" > /root/Bans/AGG-S2.txt 
+
+fi
+
+# verify working directory exists
+wdir=/root/Bans/aggr/files
+if [ -d $wdir ]; then
+
+  # do nothing
+  :
+
+else
+
+  # build dir tree
+  mkdir -p /root/Bans/aggr/files
+
+fi
+
+# wrapper to read each line from each file
+for file in /root/Bans/aggr*; do
+
+  # read each line from file separately
+  while read line; do
+
+      bans=$line
+
+      # check for ban info only 
+      all=$(echo $bans | grep actions)
+
+      if [ X"$all" != X"" ]; then 
+
+        # extract necessary data
+        banIP=$(echo $all | cut --delimiter=' ' --fields=7 | cut --delimiter='.' --fields=1,2)
+
+        if [[ $banIP != *"already"* && $banIP != *"="* ]]; then
+
+          # print date relative lines 
+          echo $banIP >> /root/Bans/aggr/files/allIP.txt
+
+          # sort numerically
+          sort -n /root/Bans/aggr/files/allIP.txt -o /root/Bans/aggr/files/aggSort.txt
+
+          ((count++))
+
+        else
+
+          # do nothing
+          :
+
+        fi
+  
+     fi
+
+  done < $file 
+
+done
+
+
+# wrapper to read each line from each file
+
+declare -a aggIP
+touch /root/Bans/aggr/files/aggIP.txt
+touch /root/Bans/aggr/files/test.txt
+ct=0
+i=0
+
+for file in /root/Bans/aggr/files/aggSort.txt; do
+  
+  # read each line from file separately
+  while read line; do
+
+    # load array 
+    aggIP[$i]=$(echo $line | cut --delimiter='.' --fields=1,2)
+    ((i++))   
+
+  done < $file
+
+done
+
+for file in /root/Bans/aggr/files/aggSort.txt; do
+  
+e=0
+f=1
+
+  # read each line from file separately
+  while read line; do
+
+    # compare element location to the following location
+    if [[ ${aggIP[$e]} == ${aggIP[$f]} ]]; then  
+
+      ((ct++))
+
+      # element 1
+      echo "$ct --------------> ${aggIP[$e]}" >> /root/Bans/aggr/files/aggIP.txt
+      
+      ((ct++))
+
+      # element 2
+      echo "$ct --------------> ${aggIP[$f]}" >> /root/Bans/aggr/files/aggIP.txt
+      
+      ((ct--))
+
+    else
+
+      ct=1
+
+      # element 2 w/count 1
+      echo "$ct --------------> ${aggIP[$f]}" >> /root/Bans/aggr/files/aggIP.txt
+      
+    fi
+
+    ((e++))
+    ((f++))
+
+  done < $file
+
+done
+
+declare -a sortAGG
+# sort for highest value
+sort -nr /root/Bans/aggr/files/aggIP.txt > /root/Bans/aggr/files/sortAGG.txt
+
+i=0
+
+for file in /root/Bans/aggr/files/sortAGG.txt; do
+  
+  # read each line from file separately
+  while read line; do
+
+    # load array 
+    sortAGG[$i]=$(echo $line)
+    ((i++))   
+
+  done < $file
+
+done
+
+
+# create fles to work with
+echo "Most Aggressive" > /root/Bans/AGG-S2.txt 
+printf "Report: $ymd --> $hm\n" >> /root/Bans/AGG-S2.txt
+printf "Number of hits from IP block\n" >> /root/Bans/AGG-S2.txt
+printf "==============================\n" >> /root/Bans/AGG-S2.txt
+printf "${sortAGG[0]}.0.0\n" >> /root/Bans/AGG-S2.txt
+ 
+# uncomment this line for full list
+#cat ./files/aggIP.txt >> ./files/AGG-S2.txt
+
+# remove working files
+#rm ./files/allIP.txt #./files/totalx.txt
+
+
+# End of script

@@ -1,0 +1,92 @@
+#!/bin/bash
+#
+# fail2ban filter export all [TEST]
+#
+# Scan fail2ban log for banned IP's
+# and pull everything logged.
+# 
+# Thu Apr  2 09:21:19 PDT 2015
+# Written by: Scott DuBois
+
+# fail2ban log file
+#log=/var/log/fail2ban.log
+log=./tarlogs/fail2ban.log
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+count=0
+
+# verify file exists
+if [ -f $log ]; then
+
+  # remove any existing files
+  rm ./tarlogs_1/*
+
+  # copy new files in
+  cp ./tarlogs_1bk/* ./tarlogs_1
+
+  # unzip all archived files
+  gunzip ./tarlogs_1/*.gz
+
+else
+
+  # do nothing
+  :
+
+fi
+
+# warpper to read each line from each file
+for file in ./tarlogs_1/*; do
+
+  # read each line from file separately
+  while read -r line; do
+
+      bans=$line
+
+      # check for ban info only 
+      all=$(echo $bans | grep actions)
+
+      if [ X"$all" != X"" ]; then 
+
+        # extract necessary data
+        banIP=$(echo $all | cut --delimiter=' ' --fields=1,6,7)
+
+        if [[ $banIP != *"already" && $banIP != *"Unban"* && $banIP != *"banTime"* ]]; then
+
+          # print date relative lines 
+          echo $banIP >> ./files/all/totalTEST.txt
+
+          # count lines written to file
+          count=$((count+1))
+
+        else
+
+          # do nothing
+          :
+
+        fi
+  
+     fi
+
+  done < $file 
+
+done
+
+# sort the file
+sort -n ./files/all/totalTEST.txt -o ./files/all/sortAll-test.txt
+
+# create fles to work with
+echo "All Bans" > ./files/all/ALL-TEST.txt 
+printf "Report: $ymd --> $hm\n" >> ./files/all/ALL-TEST.txt
+printf "Total: $count\n" >> ./files/all/ALL-TEST.txt
+printf "==============================\n" >> ./files/all/ALL-TEST.txt
+ 
+# add the sorted info to the report file
+#cat ./files/all/total.txt >> ./files/all/ALL-TEST.txt
+
+# remove working files
+#rm ./files/all/totalTEST.txt #./files/all/sortAll1.txt
+
+
+# End of script

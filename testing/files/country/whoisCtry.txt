@@ -1,0 +1,76 @@
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '43.229.0.0 - 43.229.3.255'
+
+inetnum:        43.229.0.0 - 43.229.3.255
+netname:        DHANVI-I
+descr:          DHANVI INTERNET SOLUTIONS PRIVATE LIMITED
+admin-c:        BD289-AP
+tech-c:         MD681-AP
+country:        IN
+mnt-by:         MAINT-IN-IRINN
+mnt-irt:        IRT-IN-DHANVI
+mnt-routes:     MAINT-IN-DHANVI
+status:         ALLOCATED PORTABLE
+changed:        hm-changed@apnic.net 20150113
+source:         APNIC
+
+irt:            IRT-IN-DHANVI
+address:        B-701, SAMUDRA COMPLEX, NEAR HOTEL KLASSIC GOLD, C.G.ROAD, NAVRANGPURA, AHMEDABAD
+phone:          +91-9879508860
+fax-no:         +91-7967777777
+e-mail:         bharatdave@dhanvigroup.com
+abuse-mailbox:  bharatdave@dhanvigroup.com
+admin-c:        BD289-AP
+tech-c:         MD681-AP
+auth:           # Filtered
+remarks:        send spam and abuse report to bharatdave@dhanvigroup.com
+irt-nfy:        bharatdave@dhanvigroup.com
+notify:         bharatdave@dhanvigroup.com
+mnt-by:         MAINT-IN-DHANVI
+changed:        bharatdave@dhanvigroup.com 20140623
+source:         APNIC
+
+role:           Managing Director
+address:        B-701, SAMUDRA COMPLEX, NEAR HOTEL KLASSIC GOLD, C.G.ROAD, NAVRANGPURA, AHMEDABAD
+country:        IN
+phone:          +91-9879508860
+fax-no:         +91-7967777777
+e-mail:         bharatdave@dhanvigroup.com
+admin-c:        BD289-AP
+tech-c:         BD289-AP
+nic-hdl:        MD681-AP
+remarks:        send spam and abuse report to bharatdave@dhanvigroup.com
+notify:         bharatdave@dhanvigroup.com
+abuse-mailbox:  bharatdave@dhanvigroup.com
+mnt-by:         MAINT-IN-DHANVI
+changed:        bharatdave@dhanvigroup.com 20140623
+source:         APNIC
+
+person:         BHARATKUMAR DAVE
+address:        B-701, SAMUDRA COMPLEX, NEAR HOTEL KLASSIC GOLD, C.G.ROAD, NAVRANGPURA, AHMEDABAD
+country:        IN
+phone:          +91-9879508860
+fax-no:         +91-7967777777
+e-mail:         bharatdave@dhanvigroup.com
+nic-hdl:        BD289-AP
+remarks:        send spam and abuse report to bharatdave@dhanvigroup.com
+notify:         bharatdave@dhanvigroup.com
+abuse-mailbox:  bharatdave@dhanvigroup.com
+mnt-by:         MAINT-IN-DHANVI
+changed:        bharatdave@dhanvigroup.com 20140623
+source:         APNIC
+
+% Information related to '43.229.0.0/24AS133257'
+
+route:          43.229.0.0/24
+descr:          Route for 43.229.0.0/24
+origin:         AS133257
+mnt-by:         MAINT-IN-DHANVI
+changed:        bharatdave@dhanvigroup.com 20150203
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.69.1-APNICv1r0 (UNDEFINED)
+
+

@@ -1,0 +1,76 @@
+#!/bin/bash
+#
+# fail2ban filter export all [S1]
+#
+# Scan fail2ban log for banned IP's
+# and pull everything logged.
+# 
+# Thu Apr  2 09:21:19 PDT 2015
+# Written by: Scott DuBois
+
+# fail2ban log file
+log=/var/log/fail2ban.log
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+count=0
+
+# verify file exists
+if [ -f $log ]; then
+
+ # read each line from file separately
+ while read line
+
+  do
+
+   bans=$line
+
+    # check for ban info only 
+    all=$(echo $bans | grep actions)
+
+     #if [ X"$all" != X"" ]; then 
+     if [ X"$all" != X"" ]; then 
+
+       # extract necessary data
+       banIP=$(echo $all | cut --delimiter=' ' --fields=1,6,7)
+
+        if [[ $banIP != *"already" ]]; then
+
+         # print date relative lines 
+         echo $banIP >> /home/scott/Bans/total.txt
+
+         count=$((count+1))
+
+       else
+
+        :
+
+       fi
+  
+    fi
+
+  done < $log
+
+# sort the file
+sort -n /home/scott/Bans/total.txt > /home/scott/Bans/totalx.txt
+
+# create fles to work with
+echo "All Bans" > /home/scott/Bans/ALL-S1.txt 
+printf "Report: $ymd --> $hm\n" >> /home/scott/Bans/ALL-S1.txt
+printf "Total: $count\n" >> /home/scott/Bans/ALL-S1.txt
+printf "==============================\n" >> /home/scott/Bans/ALL-S1.txt
+ 
+# add the sorted info to the report file
+cat /home/scott/Bans/totalx.txt >> /home/scott/Bans/ALL-S1.txt
+
+# remove working files
+rm /home/scott/Bans/total.txt /home/scott/Bans/totalx.txt
+
+else
+
+ echo "fail2ban is totally empty\n" > /home/scott/Bans/ALL-S1.txt
+
+fi
+
+# End of script

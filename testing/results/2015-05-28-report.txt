@@ -1,0 +1,24 @@
+
+
+
+BanInformer
+Single Server Report
+Report Date: 2015-05-28
+Report Time: 19:58
+
+============================================================
+
+Server Reporting IP            104.131.129.178
+Reporting Frequency (min)      240
+
+Banned IP Total                623
+Banned IP Today                5
+Attempts Delta                 618
+
+IP Ban Time (sec)              95000000
+IP's Released Today            0
+
+Most Aggressive Block          43.229
+Country Origin of Block        IN
+
+

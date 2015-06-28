@@ -1,0 +1,11 @@
+#!/usr/bin bash
+
+touch ./files/whotest.txt
+whoFile=./files/whoisCtry.txt
+
+while read line; do
+
+  who=$(echo $line)
+  echo $who >> ./files/whotest.txt
+
+done < $line

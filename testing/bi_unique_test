@@ -1,0 +1,192 @@
+#!/bin/bash
+#
+# BanInformer unique [TEST]
+#
+# Report unique hits on each server
+# 
+# 
+# Sat Apr 18 19:13:00 PDT 2015
+# Written by: Scott DuBois
+
+#log=/var/log/fail2ban.log
+all1=./files/all/totalS1.txt
+all2=./files/all/totalS2.txt
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+count1=0
+count2=0
+
+# test files
+#------------
+touch ./files/unique/arrtestFile1.txt
+touch ./files/unique/arrsortFile1.txt
+touch ./files/unique/arrsortFile2.txt
+
+# verify file exists
+if [ -f $all1 ]; then
+
+  declare -a arrS1
+  i=0
+
+  # read each line totalS1
+  while read -r line; do
+ 
+    varS1=$(echo $line)
+
+    if [ X"$varS1" != X"" ]; then 
+
+      # extract necessary data
+      arrS1[$i]=$(echo $varS1 | cut --delimiter=' ' --fields=3)
+
+      # test print
+      echo "${arrS1[$i]}" >> ./files/unique/arrtestFile1.txt
+
+      ((i++))
+
+      ((count1++))
+
+   else
+
+     # do nothing
+     :
+
+   fi
+  
+  done < $all1
+
+  # sort the array
+  readarray -t sortS1 < <(for a in "${arrS1[@]}"; do echo "$a"; done | sort)
+
+fi
+
+# Test read each sorted array-----------------
+for ea in "${sortS1[@]}"; do
+
+  echo "$ea" >> ./files/unique/arrsortFile1.txt
+
+done
+# End test -----------------------------------
+
+# verify file exists
+if [ -f $all2 ]; then
+
+  declare -a arrS2
+  i=0
+
+  # read each line ALL-S1
+  while read -r line; do
+ 
+    varS2=$(echo $line)
+
+    if [ X"$varS2" != X"" ]; then 
+
+      # extract necessary data
+      arrS2[$i]=$(echo $varS2 | cut --delimiter=' ' --fields=3)
+
+      ((i++))
+
+      ((count2++))
+
+   else
+
+     # do nothing
+     :
+
+   fi
+  
+  done < $all2
+
+  # sort the array
+  readarray -t sortS2 < <(for a in "${arrS2[@]}"; do echo "$a"; done | sort)
+
+fi
+
+# Test read each sorted array-----------------
+for ea in "${sortS2[@]}"; do
+
+  echo "$ea" >> ./files/unique/arrsortFile2.txt
+
+done
+# End test -----------------------------------
+
+
+uniqueT=($count1 + $count2) 
+
+# compare sorted arrays and sort unique
+
+touch ./files/unique/uniqueList.txt
+count3=0
+i=0
+
+if [[ ${#sortS1[@]} > ${#sortS2[@]} ]]; then
+
+  len=${#sortS1[@]}
+
+  while [ $len -gt 0 ]; do
+
+    if matchCheck sortS1 "${sortS2[$i]}"; then 
+      
+      echo "${sortS2[$i]}" >> ./files/unique/uniqueList.txt   
+
+      ((count3++))
+
+      ((i++))
+
+      ((len--))
+    
+    fi
+
+  done
+
+else
+
+  len=${#sortS2[@]}
+
+  while [ $len -gt 0 ]; do
+
+    if matchCheck sortS2 "${sortS1[$i]}"; then 
+      
+      echo "${sortS1[$i]}" >> ./files/unique/uniqueList.txt   
+
+      ((count3++))
+
+      ((i++))
+
+      ((len--))
+
+    fi
+
+  done
+
+fi
+
+matchCheck ()
+  {
+    local haystack=${1}[@]
+    local needle=${2}
+    for i in $(!haystack); do
+      if [[ $(i) == $(needle) ]]; then
+       ((count3++))
+      fi
+    done
+    :
+  }    
+
+# create files to work with
+echo "Unique Hits" > ./files/unique/UNQ-TEST.txt 
+printf "Report: $ymd --> $hm\n" >> ./files/unique/UNQ-TEST.txt
+printf "Total Hits: $uniqueT\n" >> ./files/unique/UNQ-TEST.txt
+printf "==============================\n" >> ./files/unique/UNQ-TEST.txt
+printf "Total Unique -------> $count3\n" >> ./files/unique/UNQ-TEST.txt
+ 
+# add the sorted info to the report file
+#cat ./files/unique/aggIP.txt >> ./files/unique/UNQ-TEST.txt
+
+# remove working files
+#rm ./files/unique/allIP.txt #./files/unique/totalx.txt
+
+
+
+# End of script

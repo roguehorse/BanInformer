@@ -1,0 +1,73 @@
+# BanInformer
+# Written by: Scott DuBois
+#
+# Development Notes
+#
+# Mon Mar 30 17:57:16 PDT 2015
+# ============================
+#
+# Core program is written and has been running on two DigitalOcean servers now
+# for almost 24 hours. Cron jobs on each server scan the fail2ban log file every
+# 5 minutes then an scp cron pulls the files down every 12 minutes. I will be
+# cutting back on the frequency that the server crons collect data to every hour
+# then collect the data at +5min of the hour.
+#
+# Making preparations now to include a third server (AWS) into the process which
+# will require a program to collect all data into a single formatted information
+# form. Undecided as to which program to use for data collection however, have
+# the selection narrowed down to Perl, Python, or Ruby. At current, Perl offers
+# excellent modules for creating formatted forms however it's current popularity
+# is behind in comparison to Python or Ruby.
+#
+# Tue Mar 31 07:20:29 PDT 2015
+# ============================
+#
+# Checked the status of current running instances and all looks fine; as was
+# expected. Will establish reporting from third (AWS) server today.
+#
+# Sat Apr 11 22:36:16 PDT 2015
+# ============================
+#
+# Did not make additions to AWS server to cut back on current expenses. Made
+# changes to the "daily" and "all" scripts to account for some errors and
+# added formatting improvements. All changes have been pushed to repository.
+# Both servers are running "daily" and "all" scripts.
+#
+# Separated testing scripts from working scripts by adding another folder named
+# "testing". At current, the "all" script only pulls data from the currently
+# active fail2ban.log file. Need to write a script to cat _all_ fail2ban files
+# that are located in the /var/log/ directory. 
+#
+# Mon Apr 13 14:26:21 PDT 2015
+# ============================
+#
+# Updated both servers with new "all" scripts as the previous version had some
+# kind of bugs in it that prevented it from working on the servers. This was of
+# interest as the script was thoroughly tested "prior" to pushing it up to the
+# servers. As such, all scripts, local and remote, have been updated
+# accordingly.
+#
+# Both servers are now processing data as root rather than trying to do file
+# manipulations in the user account. Once data is processed, files are pushed to
+# the primary user account then chown.
+#
+# Current crons on both servers include:
+# daily --> */10 * * * *
+# all   --> */12 * * * *
+# cp    --> */15 * * * *
+#
+# Sun May  3 18:28:51 PDT 2015
+# ============================
+#
+# Modified the "daily" scripts to use an array instead of writing to a file. The
+# program is much faster and more efficient this way. Installed both new scripts
+# to the respective servers.
+#
+# Sun Jun 28 13:45:02 PDT 2015
+# ============================
+#
+# Project temporarily closed due to personal circumstances.
+#
+# Initial project concepts deemed working as of last run. Still a few areas of
+# information I would have liked to collect but it will have to wait for a later
+# date of work. Plans still continue to convert the entire program to Python.

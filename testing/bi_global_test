@@ -1,0 +1,175 @@
+#!/bin/bash
+#
+# BanInformer most aggressive [TEST]
+#
+# Scan fail2ban logs for most aggreesive
+# IP block
+# 
+# Thu Apr 16 09:44:08 PDT 2015
+# Written by: Scott DuBois
+
+# fail2ban log file
+#log=/var/log/fail2ban.log
+log=./tarlogs_1/fail2ban.log
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+count=0
+
+# verify file exists
+if [ -f $log ]; then
+
+  # remove existing files
+  rm ./tarlogs_1/*
+
+  # copy in new files
+  cp ./tarlogs_1bk/* ./tarlogs_1
+
+  # unzip all archived files
+  gunzip ./tarlogs_1/*.gz
+
+else
+
+  # do nothing
+  :
+
+fi
+
+# wrapper to read each line from each file
+for file in ./tarlogs_1/*; do
+
+  # read each line from file separately
+  while read -r line; do
+
+      bans=$line
+
+      # check for ban info only 
+      all=$(echo $bans | grep actions)
+
+      if [ X"$all" != X"" ]; then 
+
+        # extract necessary data
+        banIP=$(echo $all | cut --delimiter=' ' --fields=7 | cut --delimiter='.' --fields=1,2)
+
+        if [[ $banIP != *"already"* && $banIP != *"="* ]]; then
+
+          # print date relative lines 
+          echo $banIP >> ./files/global/allIP.txt
+
+          # sort numerically
+          sort -n ./files/global/allIP.txt -o ./files/global/aggSort.txt
+
+          ((count++))
+
+        else
+
+          # do nothing
+          :
+
+        fi
+  
+     fi
+
+  done < $file 
+
+done
+
+
+# wrapper to read each line from each file
+
+declare -a aggIP
+touch ./files/global/aggIP.txt
+touch ./files/global/test.txt
+ct=0
+i=0
+
+for file in ./files/global/aggSort.txt; do
+  
+  # read each line from file separately
+  while read -r line; do
+
+    # load array 
+    aggIP[$i]=$(echo $line | cut --delimiter='.' --fields=1,2)
+    ((i++))   
+
+  done < $file
+
+done
+
+for file in ./files/global/aggSort.txt; do
+  
+e=0
+f=1
+
+  # read each line from file separately
+  while read -r line; do
+
+    # compare element location to the following location
+    if [[ ${aggIP[$e]} == ${aggIP[$f]} ]]; then  
+
+      ((ct++))
+
+      # element 1
+      echo "$ct --------------> ${aggIP[$e]}" >> ./files/global/aggIP.txt
+      
+      ((ct++))
+
+      # element 2
+      echo "$ct --------------> ${aggIP[$f]}" >> ./files/global/aggIP.txt
+      
+      ((ct--))
+
+    else
+
+      ct=1
+
+      # element 2 w/count 1
+      echo "$ct --------------> ${aggIP[$f]}" >> ./files/global/aggIP.txt
+      
+    fi
+
+    ((e++))
+    ((f++))
+
+  done < $file
+
+done
+
+declare -a sortAGG
+# sort for highest value
+sort -nr ./files/global/aggIP.txt > ./files/global/sortAGG.txt
+
+i=0
+
+for file in ./files/global/sortAGG.txt; do
+  
+  # read each line from file separately
+  while read -r line; do
+
+    # load array 
+    sortAGG[$i]=$(echo $line)
+    ((i++))   
+
+  done < $file
+
+done
+
+
+# create fles to work with
+echo "Most Aggressive" > ./files/global/AGG-TEST.txt 
+printf "Report: $ymd --> $hm\n" >> ./files/global/AGG-TEST.txt
+printf "Number of hits from IP block\n" >> ./files/global/AGG-TEST.txt
+printf "==============================\n" >> ./files/global/AGG-TEST.txt
+printf "${sortAGG[0]}.0.0\n" >> ./files/global/AGG-TEST.txt
+ 
+# add the sorted info to the report file
+#cat ./files/global/aggIP.txt >> ./files/global/AGG-TEST.txt
+
+# remove working files
+#rm ./files/global/allIP.txt #./files/global/totalx.txt
+
+
+
+
+# End of script

@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+# fail2ban filter export S2
+#
+# Scan fail2ban log for banned IP's
+# and report only those IP's which
+# match the current date.
+# 
+# Fri Mar 27 10:33:40 PDT 2015
+# Written by: Scott DuBois
+
+# fail2ban log file
+log=/var/log/fail2ban.log
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+
+# verify file exists
+if [ -f $log ]; then
+
+  # read each line from file separately
+  while read -r line
+
+    do
+
+    bans=$line
+
+    # check to see if dates match
+    today=$(echo $bans | grep $ymd | grep actions)
+
+      if [ X"$today" != X"" ]; then 
+
+        # extract necessary data
+        banIP=$(echo $today | cut --delimiter=' ' --fields=1,6,7)
+
+          if [[ $banIP != *"already" ]]; then
+
+            # print date relative lines 
+            echo $banIP >> /home/scott/Bans/daily.txt
+
+          else
+            
+            # do nothing
+            :
+
+          fi
+
+      fi
+  
+    done < $log
+
+# create report file 
+echo "Daily bans Server 2" > /home/scott/Bans/bans-S2.txt
+printf "Report: $ymd --> $hm\n" >> /home/scott/Bans/bans-S2.txt
+printf "==============================\n" >> /home/scott/Bans/bans-S2.txt
+
+# sort the file
+sort -n /home/scott/Bans/daily.txt > /home/scott/Bans/bansx.txt
+
+# add the sorted info to the report file
+cat /home/scott/Bans/bansx.txt >> /home/scott/Bans/bans-S2.txt
+
+# remove working files
+rm /home/scott/Bans/daily.txt /home/scott/Bans/bansx.txt
+
+else
+
+  echo "fail2ban is totally empty\n" > /home/scott/Bans/bans-S2.txt
+
+fi
+
+# End of script

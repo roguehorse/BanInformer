@@ -1,0 +1,94 @@
+#!/bin/bash
+#
+# fail2ban filter export all [S1]
+#
+# Scan fail2ban log for banned IP's
+# and pull everything logged.
+# 
+# Thu Apr  2 09:21:19 PDT 2015
+# Written by: Scott DuBois
+
+# fail2ban log file
+log=/var/log/fail2ban.log
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+count=0
+
+# verify file exists
+if [ -f $log ]; then
+
+  # empty any current files
+  rm /root/Bans/logs/*
+
+  # copy to working file
+  cp /var/log/fail2* /root/Bans/logs
+
+  # unzip any gz files
+  gunzip /root/Bans/logs/*.gz
+
+  # print confirmation
+  echo "Log files found" > /root/Bans/confirmation.txt
+  printf "$ymd --> $hm\n" >> /root/Bans/confirmation.txt
+
+else
+
+  echo "No log files available" > /root/Bans/ALL-S1.txt
+
+fi
+
+# wrapper to read each line from each file
+for file in /root/Bans/logs/*; do
+
+  # read each line from file separately
+  while read line; do
+
+    bans=$line
+
+    # check for ban info only 
+    all=$(echo $bans | grep actions)
+
+     #if [ X"$all" != X"" ]; then 
+     if [ X"$all" != X"" ]; then 
+
+       # extract necessary data
+       banIP=$(echo $all | cut --delimiter=' ' --fields=1,6,7)
+
+       if [[ $banIP != *"already" && $banIP != *"Unban"* && $banIP != *"banTime"* ]]; then
+
+         # print date relative lines 
+         echo $banIP >> /dev/null #/root/Bans/total.txt
+
+         count=$((count+1))
+
+       else
+
+        # do nothing
+        :
+
+       fi
+  
+    fi
+
+  done < $file
+
+done
+
+# sort the file
+#sort -n /home/scott/Bans/total.txt -o /home/scott/Bans/totalx.txt
+
+# create fles to work with
+echo "All Bans" > /root/Bans/ALL-S1.txt 
+printf "Report: $ymd --> $hm\n" >> /root/Bans/ALL-S1.txt
+printf "Total: $count\n" >> /root/Bans/ALL-S1.txt
+printf "==============================\n" >> /root/Bans/ALL-S1.txt
+ 
+# add the sorted info to the report file
+#cat /home/scott/Bans/totalx.txt >> /home/scott/Bans/ALL-S1.txt
+
+# remove working files
+#rm /home/scott/Bans/total.txt /home/scott/Bans/totalx.txt
+
+
+# End of script

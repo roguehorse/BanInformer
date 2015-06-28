@@ -1,0 +1,98 @@
+2015-05-25 06:28:54,206 fail2ban.server : INFO   Changed logging target to /var/log/fail2ban.log for Fail2ban v0.8.11
+2015-05-25 08:32:47,599 fail2ban.actions: WARNING [ssh] Ban 69.73.58.36
+2015-05-25 08:50:03,067 fail2ban.filter : WARNING Determined IP using DNS Lookup: ip-97-74-200-205.ip.secureserver.net = ['97.74.200.205']
+2015-05-25 08:50:05,529 fail2ban.actions: WARNING [ssh] Ban 97.74.200.205
+2015-05-25 09:04:59,174 fail2ban.actions: WARNING [ssh] Ban 219.144.162.174
+2015-05-25 09:31:29,059 fail2ban.actions: WARNING [ssh] Ban 221.0.186.33
+2015-05-25 10:30:13,433 fail2ban.actions: WARNING [ssh] Ban 187.51.167.20
+2015-05-25 10:58:34,496 fail2ban.filter : WARNING Determined IP using DNS Lookup: ip-72-167-165-64.ip.secureserver.net = ['72.167.165.64']
+2015-05-25 10:58:37,540 fail2ban.actions: WARNING [ssh] Ban 72.167.165.64
+2015-05-25 10:58:39,554 fail2ban.actions: INFO   [ssh] 72.167.165.64 already banned
+2015-05-25 12:01:39,349 fail2ban.actions: WARNING [ssh] Ban 219.141.209.25
+2015-05-25 12:36:48,153 fail2ban.actions: WARNING [ssh] Ban 118.200.85.53
+2015-05-25 13:43:39,367 fail2ban.actions: WARNING [ssh] Ban 189.5.188.11
+2015-05-25 15:15:28,887 fail2ban.filter : WARNING Determined IP using DNS Lookup: 34.red-213-97-35.staticip.rima-tde.net = ['213.97.35.34']
+2015-05-25 15:15:32,249 fail2ban.actions: WARNING [ssh] Ban 213.97.35.34
+2015-05-25 15:24:49,285 fail2ban.actions: WARNING [ssh] Ban 61.189.35.166
+2015-05-25 16:47:30,477 fail2ban.filter : WARNING Determined IP using DNS Lookup: ip-72-167-55-110.ip.secureserver.net = ['72.167.55.110']
+2015-05-25 16:47:33,237 fail2ban.actions: WARNING [ssh] Ban 72.167.55.110
+2015-05-25 16:47:35,251 fail2ban.actions: INFO   [ssh] 72.167.55.110 already banned
+2015-05-25 18:26:46,043 fail2ban.actions: WARNING [ssh] Ban 213.185.83.18
+2015-05-25 19:37:11,697 fail2ban.actions: WARNING [ssh] Ban 177.73.217.202
+2015-05-25 20:57:02,111 fail2ban.filter : WARNING Determined IP using DNS Lookup: ks3096171.kimsufi.com = ['94.23.58.129']
+2015-05-25 20:57:05,454 fail2ban.actions: WARNING [ssh] Ban 94.23.58.129
+2015-05-25 21:24:45,479 fail2ban.actions: WARNING [ssh] Ban 146.255.64.92
+2015-05-26 01:16:49,970 fail2ban.filter : WARNING Determined IP using DNS Lookup: loft6203.serverloft.eu = ['188.138.72.27']
+2015-05-26 01:16:52,782 fail2ban.actions: WARNING [ssh] Ban 188.138.72.27
+2015-05-26 02:23:55,076 fail2ban.actions: WARNING [ssh] Ban 199.106.88.54
+2015-05-26 04:52:20,040 fail2ban.actions: WARNING [ssh] Ban 222.197.129.60
+2015-05-26 04:53:05,140 fail2ban.actions: WARNING [ssh] Ban 112.220.63.83
+2015-05-26 06:40:55,806 fail2ban.actions: WARNING [ssh] Ban 222.223.220.108
+2015-05-26 09:03:22,136 fail2ban.actions: WARNING [ssh] Ban 118.186.216.62
+2015-05-26 09:18:20,817 fail2ban.actions: WARNING [ssh] Ban 43.255.188.151
+2015-05-26 10:23:37,873 fail2ban.actions: WARNING [ssh] Ban 43.229.52.147
+2015-05-26 11:58:41,322 fail2ban.filter : WARNING Determined IP using DNS Lookup: s15283632.onlinehome-server.info = ['87.106.176.38']
+2015-05-26 11:58:43,089 fail2ban.actions: WARNING [ssh] Ban 87.106.176.38
+2015-05-26 12:22:11,672 fail2ban.actions: WARNING [ssh] Ban 104.41.176.41
+2015-05-26 15:17:30,527 fail2ban.actions: WARNING [ssh] Ban 183.61.109.240
+2015-05-26 16:28:28,233 fail2ban.actions: WARNING [ssh] Ban 43.229.52.149
+2015-05-26 17:49:28,873 fail2ban.actions: WARNING [ssh] Ban 52.16.45.103
+2015-05-26 19:34:02,779 fail2ban.filter : WARNING Determined IP using DNS Lookup: s17324569.onlinehome-server.info = ['87.106.222.30']
+2015-05-26 19:34:05,186 fail2ban.actions: WARNING [ssh] Ban 87.106.222.30
+2015-05-26 22:53:15,724 fail2ban.actions: WARNING [ssh] Ban 111.40.86.81
+2015-05-27 00:58:09,098 fail2ban.actions: WARNING [ssh] Ban 43.229.52.191
+2015-05-27 01:21:47,691 fail2ban.actions: WARNING [ssh] Ban 191.253.66.245
+2015-05-27 01:25:05,067 fail2ban.actions: WARNING [ssh] Ban 43.229.52.190
+2015-05-27 02:25:12,602 fail2ban.actions: WARNING [ssh] Ban 43.229.52.138
+2015-05-27 02:42:10,441 fail2ban.actions: WARNING [ssh] Ban 222.158.196.223
+2015-05-27 02:50:22,365 fail2ban.actions: WARNING [ssh] Ban 60.220.224.231
+2015-05-27 03:00:17,491 fail2ban.actions: WARNING [ssh] Ban 43.229.52.174
+2015-05-27 03:41:41,018 fail2ban.actions: WARNING [ssh] Ban 115.248.223.206
+2015-05-27 05:01:29,710 fail2ban.actions: WARNING [ssh] Ban 59.126.154.44
+2015-05-27 05:04:59,127 fail2ban.actions: WARNING [ssh] Ban 115.248.186.2
+2015-05-27 05:19:33,690 fail2ban.actions: WARNING [ssh] Ban 43.255.188.149
+2015-05-27 05:46:02,564 fail2ban.actions: WARNING [ssh] Ban 43.229.52.181
+2015-05-27 06:03:19,408 fail2ban.actions: WARNING [ssh] Ban 123.49.43.222
+2015-05-27 06:30:06,371 fail2ban.actions: WARNING [ssh] Ban 218.65.30.217
+2015-05-27 06:45:56,128 fail2ban.actions: WARNING [ssh] Ban 59.21.194.41
+2015-05-27 07:12:32,988 fail2ban.actions: WARNING [ssh] Ban 43.229.52.135
+2015-05-27 07:50:00,994 fail2ban.actions: WARNING [ssh] Ban 43.229.52.152
+2015-05-27 07:56:22,695 fail2ban.actions: WARNING [ssh] Ban 116.255.245.78
+2015-05-27 10:30:50,027 fail2ban.filter : WARNING Determined IP using DNS Lookup: ux51.oos-hosting.net = ['82.80.232.34']
+2015-05-27 10:30:52,362 fail2ban.actions: WARNING [ssh] Ban 82.80.232.34
+2015-05-27 11:33:35,167 fail2ban.actions: WARNING [ssh] Ban 49.248.32.170
+2015-05-27 12:13:30,556 fail2ban.actions: WARNING [ssh] Ban 112.65.229.76
+2015-05-27 12:33:31,728 fail2ban.actions: WARNING [ssh] Ban 61.82.71.251
+2015-05-27 12:49:53,494 fail2ban.actions: WARNING [ssh] Ban 190.85.150.140
+2015-05-27 13:36:09,577 fail2ban.actions: WARNING [ssh] Ban 116.255.199.26
+2015-05-27 15:10:50,880 fail2ban.actions: WARNING [ssh] Ban 60.249.253.146
+2015-05-27 21:57:20,215 fail2ban.actions: WARNING [ssh] Ban 222.186.21.182
+2015-05-28 00:49:41,392 fail2ban.actions: WARNING [ssh] Ban 195.154.52.139
+2015-05-28 00:58:41,406 fail2ban.actions: WARNING [ssh] Ban 213.254.12.125
+2015-05-28 03:13:20,172 fail2ban.actions: WARNING [ssh] Ban 98.25.77.42
+2015-05-28 03:53:53,652 fail2ban.actions: WARNING [ssh] Ban 43.255.188.166
+2015-05-28 05:07:26,721 fail2ban.actions: WARNING [ssh] Ban 43.229.52.180
+2015-05-28 05:12:12,251 fail2ban.actions: WARNING [ssh] Ban 82.222.9.122
+2015-05-28 07:26:14,876 fail2ban.actions: WARNING [ssh] Ban 50.56.177.65
+2015-05-28 07:56:04,160 fail2ban.actions: WARNING [ssh] Ban 46.24.21.68
+2015-05-28 10:08:07,589 fail2ban.actions: WARNING [ssh] Ban 118.194.240.26
+2015-05-28 13:29:16,613 fail2ban.actions: WARNING [ssh] Ban 77.236.99.200
+2015-05-28 14:05:31,581 fail2ban.actions: WARNING [ssh] Ban 189.254.196.101
+2015-05-28 14:05:33,597 fail2ban.actions: INFO   [ssh] 189.254.196.101 already banned
+2015-05-28 14:30:28,341 fail2ban.actions: WARNING [ssh] Ban 186.147.233.125
+2015-05-28 14:58:19,430 fail2ban.actions: WARNING [ssh] Ban 5.160.217.218
+2015-05-28 15:31:45,110 fail2ban.actions: WARNING [ssh] Ban 115.78.231.17
+2015-05-28 18:24:00,982 fail2ban.actions: WARNING [ssh] Ban 134.255.219.129
+2015-05-28 18:33:50,087 fail2ban.actions: WARNING [ssh] Ban 217.170.195.88
+2015-05-28 20:08:29,528 fail2ban.actions: WARNING [ssh] Ban 43.229.52.182
+2015-05-28 20:42:06,273 fail2ban.actions: WARNING [ssh] Ban 50.73.193.17
+2015-05-28 23:02:56,721 fail2ban.actions: WARNING [ssh] Ban 187.210.107.242
+2015-05-28 23:25:21,216 fail2ban.actions: WARNING [ssh] Ban 162.250.126.81
+2015-05-29 00:05:14,614 fail2ban.actions: WARNING [ssh] Ban 221.203.106.229
+2015-05-29 01:23:03,198 fail2ban.actions: WARNING [ssh] Ban 43.255.188.137
+2015-05-29 01:54:15,645 fail2ban.actions: WARNING [ssh] Ban 222.77.190.33
+2015-05-29 02:10:19,452 fail2ban.actions: WARNING [ssh] Ban 142.54.164.106
+2015-05-29 05:50:06,353 fail2ban.actions: WARNING [ssh] Ban 195.228.135.115
+2015-05-29 08:20:37,959 fail2ban.actions: WARNING [ssh] Ban 222.186.21.103
+2015-05-29 08:27:46,770 fail2ban.actions: WARNING [ssh] Ban 124.173.124.110
+2015-05-29 10:30:05,290 fail2ban.actions: WARNING [ssh] Ban 43.229.52.175

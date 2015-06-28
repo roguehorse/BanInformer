@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Run all individual reports [TEST]
+#
+# Thu May 28 12:51:46 PDT 2015
+# Scott "Roguehorse" DuBois
+#
+
+# copy log files to working location
+cp /media/WD1TB/DuBois/Programming/BanInformer/logS1/* ~/Scripts/BanInformer/testing/tarlogs_1bk
+
+cp ~/Scripts/BanInformer/testing/tarlogs_1bk/* ~/Scripts/BanInformer/testing/tarlogs_1
+
+# delete expired data file if it exists
+log=/home/roguehorse/Scripts/BanInformer/testing/files/report/test_data.txt
+
+if [ -f $log ]; then
+
+  rm /home/roguehorse/Scripts/BanInformer/testing/files/report/test_data.txt
+
+fi
+
+bash /home/roguehorse/Scripts/BanInformer/testing/bi_all_s1_test
+bash /home/roguehorse/Scripts/BanInformer/testing/bi_daily_test
+bash /home/roguehorse/Scripts/BanInformer/testing/bi_btime_test
+bash /home/roguehorse/Scripts/BanInformer/testing/bi_unban_test
+bash /home/roguehorse/Scripts/BanInformer/testing/bi_block_test
+bash /home/roguehorse/Scripts/BanInformer/testing/bi_country_test
+
+# End of Script

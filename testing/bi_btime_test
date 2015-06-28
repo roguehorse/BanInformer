@@ -1,0 +1,51 @@
+#!/bin/bash
+#
+# BanInformer Fetch bantime from jail.local 
+#
+# Wed May  6 13:16:48 PDT 2015
+# Written by: Scott DuBois
+
+# fail2ban log file
+#conf=/etc/fail2ban/jail.local
+conf=./downloads/jail.local
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+
+# verify file exists
+if [ -f $conf ]; then
+
+  # read each line from file separately
+  while read -r line; do
+
+    # check to see if dates match
+    srch=$(echo $line | grep bantime)
+
+    if [ X"$srch" != X"" ]; then 
+
+      # extract necessary data
+      fltr=$(echo $srch | cut --delimiter=' ' --fields=3,6)
+
+      if [[ $fltr != *"of"* && $fltr != *"week" ]]; then
+
+        # print date relative lines 
+        btime=$(echo $fltr)
+
+      fi
+
+    fi
+  
+  done < $conf
+
+fi
+
+echo $btime >> ./files/report/test_data.txt
+
+# create report file 
+echo "Jail Settings" > ./files/report/JAIL.txt
+printf "Report: $ymd\n\n" >> ./files/report/JAIL.txt
+printf "==============================\n\n" >> ./files/report/JAIL.txt
+printf "Current Bantime: $btime\n\n" >> ./files/report/JAIL.txt
+
+
+# End of script

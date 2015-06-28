@@ -1,0 +1,89 @@
+#!/bin/bash
+#
+# BanInformer aggressive country [TEST]
+#
+# Search APNIC database for corresponding
+# country to most aggressive IP block
+# 
+# Sat Apr 18 11:44:02 PDT 2015
+# Written by: Scott DuBois
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+
+# verify file exists
+list=./files/country/sortAGG.txt
+if [ -f $list ]; then
+
+  declare -a aggCtry
+  i=0
+
+  # read file and sort
+  while read -r line; do
+
+    # load array 
+    aggCtry[$i]=$(echo $line | cut --delimiter=' ' --fields=2 | cut --delimiter='.' --fields=1,2)
+    ((i++))   
+
+  done < $list
+
+topCtry=${aggCtry[0]}.0.0
+#echo $topCtry
+
+else
+
+  echo "No list found" > ./files/country/CTRY-TEST.txt
+
+fi
+
+if [ X"$topCtry" != X"" ]; then
+
+  declare -a whoisArr
+  i=0
+
+  # get whois and write
+  whois -h whois.apnic.net $topCtry > ./files/country/whoisCtry.txt
+
+  # file to read
+  data=./files/country/whoisCtry.txt
+
+  # read file and sort
+  while read line; do
+
+    who=$(echo $line | grep country | cut --delimiter=' ' --fields=2)
+
+    if [[ X"$who" != X"" ]]; then
+
+      whoisArr[$i]=$(echo $who)
+
+      ((i++))
+
+    else
+
+      :
+
+    fi
+
+  done < $data 
+
+else
+
+  echo "Failed to identify IP" > ./files/country/whoisCtry.txt
+
+fi
+
+echo ${whoisArr[0]} >> ./files/report/test_data.txt
+
+# create fles to work with
+echo "Aggressive Country" > ./files/country/CTRY-TEST.txt 
+printf "Report: $ymd --> $hm\n" >> ./files/country/CTRY-TEST.txt
+printf "Country of aggression\n" >> ./files/country/CTRY-TEST.txt
+printf "==============================\n" >> ./files/country/CTRY-TEST.txt
+printf "${whoisArr[0]}\n" >> ./files/country/CTRY-TEST.txt
+ 
+# remove working files
+#rm ./files/country/whoisCtry.txt #./files/country/sortAGG.txt
+
+
+# End of script

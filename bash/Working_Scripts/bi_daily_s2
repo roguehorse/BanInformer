@@ -1,0 +1,84 @@
+#!/bin/bash
+#
+# fail2ban filter export S2
+#
+# Scan fail2ban log for banned IP's
+# and report only those IP's which
+# match the current date.
+# 
+# Wed Apr 29 21:03:49 PDT 2015
+# Written by: Scott DuBois
+
+# fail2ban log file
+log=/var/log/fail2ban.log
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+count=0
+
+# verify file exists
+if [ -f $log ]; then
+
+declare -a dayIP
+i=0
+
+  # read each line from file separately
+  while read -r line
+
+    do
+
+    bans=$line
+
+    # check to see if dates match
+    today=$(echo $bans | grep $ymd | grep actions)
+
+      if [ X"$today" != X"" ]; then 
+
+        # extract necessary data
+        banIP=$(echo $today | cut --delimiter=' ' --fields=1,6,7)
+
+          if [[ $banIP != *"already" && $banIP != *"Unban"* && $banIP != *"banTime"* ]]; then
+
+            # print date relative lines 
+            dayIP[$i]=$(echo $banIP)
+            ((i++))
+
+            # count iterations
+            ((count++))
+
+          else
+            
+            # set count
+            count="No bans found"
+
+          fi
+
+      fi
+  
+    done < $log
+
+else
+
+  count="No files found"
+
+fi
+
+# create report file 
+echo "Daily bans Server 2" > /home/scott/Bans/DAILY-S2.txt
+printf "Report: $ymd --> $hm\n" >> /home/scott/Bans/DAILY-S2.txt
+printf "Bans: $count\n" >> /home/scott/Bans/DAILY-S2.txt
+printf "==============================\n" >> /home/scott/Bans/DAILY-S2.txt
+
+# sort the array
+readarray -t sortDay < <(for a in "${dayIP[@]}"; do echo "$a"; done | sort)
+
+# add the sorted info to the report file
+for ea in "${sortDay[@]}"; do
+
+  echo "$ea" >> /home/scott/Bans/DAILY-S2.txt
+
+done
+
+
+# End of script

@@ -1,0 +1,82 @@
+#!/bin/bash
+#
+# fail2ban filter export unban [TEST]
+#
+# Scan fail2ban log for unbanned IP's
+# and report only those IP's which
+# match the current date.
+# 
+# Wed Apr 15 16:57:49 PDT 2015
+# Written by: Scott DuBois
+
+# fail2ban log file
+#log=/var/log/fail2ban.log
+log=./tarlogs_1/fail2ban.log
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+count=0
+
+# verify file exists
+if [ -f $log ]; then
+
+touch ./files/unban/udaily.txt
+
+  # read each line from file separately
+  while read -r line; do
+
+    bans=$line
+
+    # check to see if dates match
+    today=$(echo $bans | grep $ymd | grep actions)
+
+    if [ X"$today" != X"" ]; then 
+
+      # extract necessary data
+      banIP=$(echo $today | cut --delimiter=' ' --fields=1,6,7)
+
+      if [[ $banIP != *"already" && $banIP != *"Ban"* && $banIP != *"banTime"* ]]; then
+
+        # print date relative lines 
+        echo $banIP >> ./files/unban/udaily.txt
+
+        # count iterations
+        count=$((count+1))
+
+      else
+            
+        # do nothing
+        :
+
+      fi
+
+    fi
+  
+  done < $log
+
+else
+
+  echo "No matching dates found" > ./files/unban/udaily.txt
+
+fi
+
+echo $count >> ./files/report/test_data.txt
+
+# create report file 
+echo "Daily Unbans" > ./files/unban/UN-S1.txt
+printf "Report: $ymd --> $hm\n" >> ./files/unban/UN-S1.txt
+printf "Unbans: $count\n" >> ./files/unban/UN-S1.txt
+printf "==============================\n" >> ./files/unban/UN-S1.txt
+
+# sort the file
+sort -n ./files/unban/udaily.txt > ./files/unban/unx.txt
+
+# add the sorted info to the report file
+cat ./files/unban/unx.txt >> ./files/unban/UN-S1.txt
+
+# remove working files
+#rm ./files/unban/udaily.txt ./files/unban/unx.txt
+
+
+# End of script

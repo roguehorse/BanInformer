@@ -1,0 +1,95 @@
+#!/bin/bash
+#
+# fail2ban filter export all [S1]
+#
+# Scan fail2ban log for banned IP's
+# and pull everything logged.
+# 
+# Wed Apr 29 20:25:38 PDT 2015
+# Written by: Scott DuBois
+
+# fail2ban log file
+log=/var/log/fail2ban.log
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+count=0
+
+# verify file exists
+if [ -f $log ]; then
+
+  # empty any current files
+  rm /root/Bans/logs/*
+
+  # copy to working file
+  cp /var/log/fail2* /root/Bans/logs
+
+  # unzip any gz files
+  gunzip /root/Bans/logs/*.gz
+
+  declare -a dayIP
+  i=0
+
+else
+
+  echo "No log files available" > /root/Bans/ALL-S1.txt
+
+fi
+
+# wrapper to read each line from each file
+for file in /root/Bans/logs/*; do
+
+  # read each line from file separately
+  while read line; do
+
+    bans=$line
+
+    # check for ban info only 
+    all=$(echo $bans | grep actions)
+
+     if [ X"$all" != X"" ]; then 
+
+       # extract necessary data
+       banIP=$(echo $all | cut --delimiter=' ' --fields=1,6,7)
+
+       if [[ $banIP != *"already" && $banIP != *"Unban"* && $banIP != *"banTime"* ]]; then
+
+         # print date relative lines 
+         echo $banIP >> /root/Bans/totalS1.txt
+         dayIP[$i]=$(echo $banIP)
+         ((i++))
+
+         ((count++))
+
+       else
+
+        # do nothing
+        :
+
+       fi
+  
+    fi
+
+  done < $file
+
+done
+
+# create files to work with
+echo "All Bans" > /root/Bans/ALL-S1.txt 
+printf "Report: $ymd --> $hm\n" >> /root/Bans/ALL-S1.txt
+printf "Total: $count\n" >> /root/Bans/ALL-S1.txt
+printf "==============================\n" >> /root/Bans/ALL-S1.txt
+ 
+# sort the array
+#readarray -t sortDay < <(for a in "${dayIP[@]}"; do echo "$a"; done | sort)
+
+# add the sorted info to the report file
+#for ea in "${sortDay[@]}"; do
+
+#  echo "$ea" >> /root/Bans/ALL-S1.txt
+
+#done
+
+
+# End of script

@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+# fail2ban filter export 1
+#
+# Scan fail2ban log for banned IP's
+# and report only those IP's which
+# match the current date.
+# 
+# Wed 04/15/2015 
+# Written by: Scott DuBois
+
+# fail2ban log file
+log=/var/log/fail2ban.log
+
+# date results to variable
+ymd=$(date +%Y-%m-%d)
+hm=$(date +%H:%M)
+
+# verify file exists
+if [ -f $log ]; then
+
+  # read each line from file separately
+  while read -r line
+
+    do
+
+    bans=$line
+
+    # check to see if dates match
+    today=$(echo $bans | grep $ymd | grep actions)
+
+      if [ X"$today" != X"" ]; then 
+
+        # extract necessary data
+        banIP=$(echo $today | cut --delimiter=' ' --fields=1,6,7)
+
+          if [[ $banIP != *"already" && $banIP != *"Ban"* && $banIP != *"banTime"* ]]; then
+
+            # print date relative lines 
+            echo $banIP >> /home/scott/Bans/udaily.txt
+
+          else
+            
+            # do nothing
+            :
+
+          fi
+
+      fi
+  
+    done < $log
+
+# create report file 
+echo "Daily Unbans S1" > /home/scott/Bans/UN-S1.txt
+printf "Report: $ymd --> $hm\n" >> /home/scott/Bans/UN-S1.txt
+printf "==============================\n" >> /home/scott/Bans/UN-S1.txt
+
+# sort the file
+sort -n /home/scott/Bans/udaily.txt > /home/scott/Bans/unx.txt
+
+# add the sorted info to the report file
+cat /home/scott/Bans/unx.txt >> /home/scott/Bans/UN-S1.txt
+
+# remove working files
+rm /home/scott/Bans/udaily.txt /home/scott/Bans/unx.txt
+
+else
+
+  echo "fail2ban is totally empty" > /home/scott/Bans/UN-S1.txt
+
+fi
+
+# End of script

@@ -1,0 +1,27 @@
+2015-05-03 07:35:01,784 fail2ban.server : INFO   Changed logging target to /var/log/fail2ban.log for Fail2ban v0.8.6
+2015-05-03 07:35:02,728 fail2ban.filter : INFO   Log rotation detected for /var/log/auth.log
+2015-05-03 07:36:02,798 fail2ban.filter : INFO   Log rotation detected for /var/log/auth.log
+2015-05-03 10:20:46,263 fail2ban.actions: WARNING [ssh] Ban 46.223.145.84
+2015-05-03 18:22:20,532 fail2ban.actions: WARNING [ssh] Ban 151.224.179.51
+2015-05-03 19:50:35,894 fail2ban.actions: WARNING [ssh] Ban 58.218.211.155
+2015-05-03 20:40:56,711 fail2ban.actions: WARNING [ssh] Ban 91.218.115.45
+2015-05-04 07:17:27,543 fail2ban.actions: WARNING [ssh] Ban 222.186.21.135
+2015-05-04 09:05:45,499 fail2ban.actions: WARNING [ssh] Ban 95.158.48.50
+2015-05-04 19:50:53,215 fail2ban.actions: WARNING [ssh] Ban 23.99.92.51
+2015-05-05 02:57:56,149 fail2ban.actions: WARNING [ssh] Ban 193.0.200.135
+2015-05-05 16:26:24,888 fail2ban.actions: WARNING [ssh] Ban 222.186.21.228
+2015-05-05 17:00:15,211 fail2ban.actions: WARNING [ssh] Ban 58.218.204.37
+2015-05-05 17:00:26,239 fail2ban.actions: WARNING [ssh] Ban 222.186.21.236
+2015-05-05 17:33:51,515 fail2ban.actions: WARNING [ssh] Ban 222.186.21.234
+2015-05-05 17:33:56,533 fail2ban.actions: WARNING [ssh] 222.186.21.234 already banned
+2015-05-05 18:40:38,916 fail2ban.actions: WARNING [ssh] Ban 222.186.21.218
+2015-05-05 18:40:43,933 fail2ban.actions: WARNING [ssh] 222.186.21.218 already banned
+2015-05-05 20:19:53,528 fail2ban.actions: WARNING [ssh] Ban 222.186.21.237
+2015-05-05 20:52:04,553 fail2ban.actions: WARNING [ssh] Ban 222.186.21.235
+2015-05-06 00:05:41,679 fail2ban.actions: WARNING [ssh] Ban 222.186.21.219
+2015-05-06 09:10:51,246 fail2ban.actions: WARNING [ssh] Ban 222.186.21.238
+2015-05-06 10:08:30,672 fail2ban.actions: WARNING [ssh] Ban 222.186.21.134
+2015-05-06 12:33:26,406 fail2ban.actions: WARNING [ssh] Ban 222.186.21.220
+2015-05-06 14:18:10,036 fail2ban.actions: WARNING [ssh] Ban 222.186.21.221
+2015-05-06 15:47:03,422 fail2ban.actions: WARNING [ssh] Ban 222.186.21.223
+2015-05-06 20:22:31,172 fail2ban.actions: WARNING [ssh] Ban 104.236.201.205

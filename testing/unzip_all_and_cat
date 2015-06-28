@@ -1,0 +1,66 @@
+#!/bin/bash
+#
+# unzip all and cat
+#
+# Unzip all fail2ban log files found in
+# /var/log/ and cat them together for 
+# further processing.
+# 
+# Sat Apr 11 23:11:30 PDT 2015
+# Written by: Scott DuBois
+
+# create crontab to do:
+# (as root) cp /var/log/fail2*
+# (as root) chown scott:scott 
+
+# fail2ban log file
+#log=/var/log/fail2ban.log
+log=./tarlogs/fail2ban.log
+count=0
+
+# verify file exists
+if [ -f $log ]; then
+
+  # unzip all files in directory
+  gunzip ./tarlogs/*.gz
+
+  # move to working directory
+  #mv ./tarlogs/* ./files/logs
+
+else
+
+  # do nothing
+  :
+
+fi
+
+
+# read each line from each file
+for file in ./tarlogs/*; do
+
+  while read line
+
+    do
+
+      if [ X"$line" != X"" ]; then 
+
+        # cat lines into file lines 
+        #echo $line >> /home/scott/Bans/MAX-ALL.txt
+        echo $line >> ./files/MAX-ALL.txt
+        sleep 1
+        printf "\r$count"
+        count=$((count+1))
+
+      else
+ 
+        # do nothing
+        :
+
+     fi
+  
+   done < $file
+
+done 
+
+
+# End of script

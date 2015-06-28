@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Copy bans from download to testing
+#
+# Wed May  6 16:19:25 PDT 2015
+# Scott "Roguehorse" DuBois
+
+cp /media/WD1TB/DuBois/Programming/BanInformer/logS1/* ~/Scripts/BanInformer/testing/tarlogs_1bk
+
+cp ~/Scripts/BanInformer/testing/tarlogs_1bk/* ~/Scripts/BanInformer/testing/tarlogs_1
+
+# End of Script
+ 
